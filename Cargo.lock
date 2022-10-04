@@ -1444,9 +1444,9 @@ dependencies = [
 
 [[package]]
 name = "sqlparser"
-version = "0.17.0"
+version = "0.25.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ddc2739f3a9bfc68e2f7b7695589f6cb0181c88af73ceaee0c84215cd2a2ae28"
+checksum = "0781f2b6bd03e5adf065c8e772b49eaea9f640d06a1b9130330fe8bd2563f4fd"
 dependencies = [
  "log",
  "serde",
