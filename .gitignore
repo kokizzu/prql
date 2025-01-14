@@ -1,8 +1,53 @@
-/target
-
 .DS_Store
 
 dist
-.vscode
-/*.prql
+target*/
+*.out
+*.log
+
+lcov.info
+*.profraw
+
+**/.vscode/settings.json
+**/.vscode/launch.json
+**/.vscode/tasks.json
 .idea
+
+_*.prql
+/*.prql
+/*.sql
+_*.sql
+
+# Appears when using Docker container
+.Trash-0
+
+**/node_modules/
+
+.task
+.direnv
+
+*.snap.tmp
+# These shouldn't be committed, and cause watchers to re-run when they're
+# created, which we don't want. That said, if ignoring them causes confusion
+# (e.g. folks look at their git status to assess whether there are pending
+# snapshots), we can adjust.
+*.pending-snap
+*.snap.new
+
+*.my.csv
+log*.json
+log*.html
+
+cobertura.xml
+codecov.json
+.envrc
+
+# Some paths we don't want to include. We could ignore these further down the
+# tree, but prettier relies on this file rather than resolving all the way down.
+.venv
+.nox
+vendor
+.mypy_cache/
+.hypothesis/
+.aider*
+.env

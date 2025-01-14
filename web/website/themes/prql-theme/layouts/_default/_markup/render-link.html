@@ -1,0 +1,23 @@
+{{/*
+
+Formats external links with an icon, and opens in a new tab.
+
+Note that it's important not to have a blank line at the end; so we exclude this
+file from prettier / pre-commit's fixer
+
+  */}}
+{{ $is_external := strings.HasPrefix .Destination "http" }}
+<a
+  href="{{ .Destination | safeURL }}"
+  {{ with .Title }}
+    title="{{ . }}"
+  {{ end }}
+  {{ if $is_external }}
+    target="_blank" rel="noopener"
+  {{ end }}
+>
+  {{ .Text | safeHTML }}
+  {{- if $is_external -}}
+    <sup><i class="bx bx-link-external"></i></sup>
+  {{- end -}}
+</a>

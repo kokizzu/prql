@@ -1,9 +1,0 @@
-derive [x = 1, y = 2]
-derive [
-  a = x,
-  b = y
-]
-derive [
-  c = a,
-  d = b,
-]

@@ -1,0 +1,54 @@
+name: publish-web
+on:
+  push:
+    branches:
+      - web
+  # Even though releases push to `web` branch, that doesn't cause this workflow
+  # to run, because GHA can't start workflows itself. So we also run on
+  # releases.
+  release:
+    types: [released]
+  # Called by pull-request when specifically requested
+  workflow_call:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+# We need consistent env vars across all workflows for the cache to work
+env:
+  CARGO_TERM_COLOR: always
+  CLICOLOR_FORCE: 1
+  RUSTFLAGS: "-C debuginfo=0"
+  RUSTDOCFLAGS: "-Dwarnings"
+
+jobs:
+  build-web:
+    uses: ./.github/workflows/build-web.yaml
+
+  deploy-web:
+    needs: build-web
+    runs-on: ubuntu-22.04
+
+    # Don't attempt to publish if on a fork or on a PR running on upstream.
+    if:
+      ${{ github.repository_owner == 'prql' &&
+      !github.event.pull_request.head.repo.fork }}
+
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Setup Pages
+        id: pages
+        uses: actions/configure-pages@v5
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4.0.5
